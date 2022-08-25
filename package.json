@@ -1,0 +1,25 @@
+{
+  "name": "carseatfinder-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx eleventy",
+    "serve": "npx eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brownbeard12/carseatfinder-frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brownbeard12/carseatfinder-frontend/issues"
+  },
+  "homepage": "https://github.com/brownbeard12/carseatfinder-frontend#readme"
+}
