@@ -30,7 +30,8 @@ const client = new faunadb.Client({
 
 function getProducts() {
   return client.query(q.Paginate(
-      q.Documents(q.Collection("car_seats"))
+      q.Documents(q.Collection("car_seats")),
+      {size: 1000}
   ))
     .then((response) => {
       const linkRefs = response.data;

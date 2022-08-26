@@ -1,12 +1,30 @@
 <html>
-    <head>
 
-    </head>
-    <body>
-        <div>
+<head>
+
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>Brand</td>
+                <td>Name</td>
+                <td>Price</td>
+            </tr>
+        </thead>
+        <tbody>
             {% for product in car_seats %}
-                {{ product.data.name }}
+            <tr>
+                <td>{{ product.data.brand }}</td>
+                <td><a href="{{product.data.prod_url}}" target="_blank">{{ product.data.name }}</a></td>
+                <td>{{ product.data.price }}</td>
+            </tr>
+
             {% endfor %}
-        </div>
-    </body>
+
+        </tbody>
+    </table>
+</body>
+
 </html>
