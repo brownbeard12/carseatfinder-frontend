@@ -4,7 +4,9 @@
     </head>
     <body>
         <div>
-            Test
+            {% for product in car_seats %}
+                {{ product.data.name }}
+            {% endfor %}
         </div>
     </body>
 </html>

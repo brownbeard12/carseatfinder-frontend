@@ -1,53 +1,54 @@
 require('dotenv').config()
+const { Collection } = require('faunadb')
 const faunadb = require('faunadb')
 const q = faunadb.query
 
-async function addOrUpdate(client, q, prod_data) {
-    await client.query(
-      q.Map(prod_data,
-        q.Lambda('item',
-          q.Let(
-            {
-              itemId: q.Select(['item_id'], q.Var('item')),
-              itemPrice: q.Select(['price'], q.Var('item')),
-              itemTS: q.Select(['timestamp'], q.Var('item')),
-              itemImgUrl: q.Select(['img_url'], q.Var('item'))
-            },
-            q.If(
-              q.Exists(q.Match(q.Index('products'), q.Var('itemId'))),
-              q.Map(
-                q.Paginate(
-                  q.Match(q.Index('products'), q.Var('itemId'))
-                ),
-                q.Lambda(
-                  'item',
-                  q.Update(
-                    q.Select('ref', q.Get(q.Var('item'))),
-                    {
-                      data: {
-                        price: q.Var('itemPrice'),
-                        img_url: q.Var('itemImgUrl'),
-                        status: 'active',
-                        timestamp: q.Var('itemTS')
-                      }
-                    }
-                  )
-                )
-              ),
-              q.Create(
-                q.Collection('car_seats'),
-                { data: q.Var('item') }
-              )
-            )
-          )
-        )
-      )
-    )
-      //.then(item => console.log(item))
-      .catch((err) => console.log(err))
-  }
+//Setup Fauna
+const secret = process.env.FAUNADB_SECRET
+let endpoint = process.env.FAUNADB_ENDPOINT
+
+if (typeof secret === 'undefined' || secret === '') {
+  console.error('key not set')
+  process.exit(1)
+}
+
+if (!endpoint) endpoint = 'https://db.us.fauna.com'
+
+let mg, domain, port, scheme
+if ((mg = endpoint.match(/^(https?):\/\/([^:]+)(:(\d+))?/))) {
+  scheme = mg[1] || 'https'
+  domain = mg[2] || 'db.us.fauna.com'
+  port = mg[4] || 443
+}
+
+const client = new faunadb.Client({
+  secret: secret,
+  domain: domain,
+  port: port,
+  scheme: scheme,
+})
+
+function getProducts() {
+  return client.query(q.Paginate(
+      q.Documents(q.Collection("car_seats"))
+  ))
+    .then((response) => {
+      const linkRefs = response.data;
+      const getAllLinksDataQuery = linkRefs.map((ref) => {
+        return q.Get(ref)
+      })
+
+      return client.query(getAllLinksDataQuery).then(ret => {
+        return ret
+      })
+    }).catch(error => {
+      return error
+    })
+}
+
+module.exports = async function() {
+  const data = await getProducts()
+
+  return data
   
-  
-  module.exports = {
-    addOrUpdate
-  }
+}
