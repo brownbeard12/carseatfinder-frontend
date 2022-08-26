@@ -48,8 +48,8 @@ function getProducts() {
 }
 
 module.exports = async function() {
+  const datetime = new Date()
   const data = await getProducts()
-
   return data
   
 }
