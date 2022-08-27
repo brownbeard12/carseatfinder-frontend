@@ -15,12 +15,14 @@
         </thead>
         <tbody>
             {% for product in car_seats %}
+                {% if product.data.status == "active" and product.data.price > 0 %}
             <tr>
                 <td>{{ product.data.brand }}</td>
                 <td><a href="{{product.data.prod_url}}" target="_blank">{{ product.data.name | strip }}</a></td>
                 <td>{{ product.data.price | remove: "$" | prepend: "$" }}</td>
             </tr>
 
+                {% endif %}
             {% endfor %}
 
         </tbody>
