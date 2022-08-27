@@ -17,7 +17,7 @@
             {% for product in car_seats %}
             <tr>
                 <td>{{ product.data.brand }}</td>
-                <td><a href="{{product.data.prod_url}}" target="_blank">{{ product.data.name }}</a></td>
+                <td><a href="{{product.data.prod_url}}" target="_blank">{{ product.data.name | strip }}</a></td>
                 <td>{{ product.data.price }}</td>
             </tr>
 
@@ -25,7 +25,7 @@
 
         </tbody>
     </table>
-    <div>Updated {{ page.date.toDateString }}</div>
+    <div>Updated {{ "now" | date: "%m/%d/%Y"}}</div>
 </body>
 
 </html>
