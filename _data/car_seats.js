@@ -1,5 +1,4 @@
 require('dotenv').config()
-const { Collection } = require('faunadb')
 const faunadb = require('faunadb')
 const q = faunadb.query
 
@@ -30,7 +29,7 @@ const client = new faunadb.Client({
 
 function getProducts() {
   return client.query(q.Paginate(
-      q.Documents(q.Collection("car_seats")),
+      q.Documents(q.Collection('car_seats')),
       {size: 1000}
   ))
     .then((response) => {
@@ -49,6 +48,7 @@ function getProducts() {
 
 module.exports = async function() {
   const data = await getProducts()
+  
   return data
   
 }
