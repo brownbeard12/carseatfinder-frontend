@@ -18,7 +18,7 @@
             <tr>
                 <td>{{ product.data.brand }}</td>
                 <td><a href="{{product.data.prod_url}}" target="_blank">{{ product.data.name | strip }}</a></td>
-                <td>{{ product.data.price }}</td>
+                <td>{{ product.data.price | remove: "$" | prepend: "$" }}</td>
             </tr>
 
             {% endfor %}
