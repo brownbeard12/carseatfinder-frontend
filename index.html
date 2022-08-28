@@ -16,7 +16,7 @@
         </thead>
         <tbody>
             {% for product in car_seats %}
-                {% if product.data.status == "active" and product.data.price > 0 %}
+                {% if product.data.status == "active" %}
             <tr>
                 <td>{{ product.data.brand }}</td>
                 <!-- <td>{{ product.data.category }}</td> -->
