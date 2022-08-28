@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <td>Brand</td>
-                <td>Category</td>
+                <!-- <td>Category</td> -->
                 <td>Name</td>
                 <td>Price</td>
             </tr>
@@ -19,7 +19,7 @@
                 {% if product.data.status == "active" and product.data.price > 0 %}
             <tr>
                 <td>{{ product.data.brand }}</td>
-                <td>{{ product.data.category }}</td>
+                <!-- <td>{{ product.data.category }}</td> -->
                 <td><a href="{{product.data.prod_url}}" target="_blank">{{ product.data.name | strip }}</a></td>
                 <td>{{ product.data.price | remove: "$" | prepend: "$" }}</td>
             </tr>
