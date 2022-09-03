@@ -1,35 +1,61 @@
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title></title>
+
+
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="images/favicon.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+
 </head>
 
 <body>
-    <table>
-        <thead>
-            <tr>
-                <td>Brand</td>
-                <!-- <td>Category</td> -->
-                <td>Name</td>
-                <td>Price</td>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in car_seats %}
-                {% if product.data.status == "active" %}
-            <tr>
-                <td>{{ product.data.brand }}</td>
-                <!-- <td>{{ product.data.category }}</td> -->
-                <td><a href="{{product.data.prod_url}}" target="_blank">{{ product.data.name | strip }}</a></td>
-                <td>{{ product.data.price | remove: "$" | prepend: "$" }}</td>
-            </tr>
+    <div class="medium-container">
+        <div class="contain-table">
+            <table id="mainTable">
+                <thead>
+                    <tr>
+                        <td>Brand</td>
+                        <!-- <td>Category</td> -->
+                        <td>Name</td>
+                        <td>Price</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in car_seats %}
+                    {% if product.data.status == "active" %}
+                    <tr>
+                        <td>{{ product.data.brand }}</td>
+                        <!-- <td>{{ product.data.category }}</td> -->
+                        <td><a href="{{product.data.prod_url}}" target="_blank">{{ product.data.name | strip }}</a></td>
+                        <td>{{ product.data.price | remove: "$" | prepend: "$" }}</td>
+                    </tr>
 
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                    {% endfor %}
 
-        </tbody>
-    </table>
-    <div>Updated {{ "now" | date: "%m/%d/%Y"}}</div>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">Updated {{ "now" | date: "%m/%d/%Y"}}</div>
+
+    </div>
+
+    <script type="text/javascript">
+
+        const dataTable = new simpleDatatables.DataTable("#mainTable")
+
+    </script>
+
 </body>
 
 </html>
